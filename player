@@ -1,0 +1,186 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Node
+{
+public:
+    string name;
+    Node* next;
+
+    Node(string n)
+    {
+        name = n;
+        next = NULL;
+    }
+};
+
+class Game
+{
+    Node* current;
+
+public:
+    Game()
+    {
+        current = NULL;
+    }
+
+    // Add Player
+    void addPlayer(string name)
+    {
+        Node* newNode = new Node(name);
+
+        if (current == NULL)
+        {
+            current = newNode;
+            newNode->next = newNode;
+        }
+        else
+        {
+            Node* temp = current;
+
+            while (temp->next != current)
+            {
+                temp = temp->next;
+            }
+
+            temp->next = newNode;
+            newNode->next = current;
+        }
+
+        cout << "Player Added Successfully\n";
+    }
+
+    // Remove Player
+    void removePlayer(string name)
+    {
+        if (current == NULL)
+        {
+            cout << "No Players Available\n";
+            return;
+        }
+
+        Node* temp = current;
+        Node* prev = NULL;
+
+        do
+        {
+            if (temp->name == name)
+            {
+                // Only one player
+                if (temp->next == temp)
+                {
+                    current = NULL;
+                }
+                else
+                {
+                    // Removing current player
+                    if (temp == current)
+                    {
+                        Node* last = current;
+
+                        while (last->next != current)
+                        {
+                            last = last->next;
+                        }
+
+                        current = current->next;
+                        last->next = current;
+                    }
+                    // Removing any other player
+                    else
+                    {
+                        prev->next = temp->next;
+                    }
+                }
+
+                delete temp;
+                cout << "Player Removed Successfully\n";
+                return;
+            }
+
+            prev = temp;
+            temp = temp->next;
+
+        } while (temp != current);
+
+        cout << "Player Not Found\n";
+    }
+
+    // Move to Next Player
+    void nextPlayer()
+    {
+        if (current == NULL)
+        {
+            cout << "No Players Available\n";
+            return;
+        }
+
+        current = current->next;
+        cout << "Turn Moved to Next Player\n";
+    }
+
+    // Display Current Turn
+    void displayTurn()
+    {
+        if (current == NULL)
+        {
+            cout << "No Players Available\n";
+            return;
+        }
+
+        cout << "Current Turn : " << current->name << endl;
+    }
+};
+
+int main()
+{
+    Game g;
+    int choice;
+    string name;
+
+    do
+    {
+        cout << "\n1. Add Player";
+        cout << "\n2. Remove Player";
+        cout << "\n3. Next Player";
+        cout << "\n4. Display Current Turn";
+        cout << "\n5. Exit";
+        cout << "\nEnter Choice : ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter Player Name : ";
+            cin >> name;
+            g.addPlayer(name);
+            break;
+
+        case 2:
+            cout << "Enter Player Name to Remove : ";
+            cin >> name;
+            g.removePlayer(name);
+            break;
+
+        case 3:
+            g.nextPlayer();
+            break;
+
+        case 4:
+            g.displayTurn();
+            break;
+
+        case 5:
+            cout << "Program Ended\n";
+            break;
+
+        default:
+            cout << "Invalid Choice\n";
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
+
