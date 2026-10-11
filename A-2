@@ -1,0 +1,43 @@
+def search1(arr, key):
+    for i in range(len(arr)):
+        if key == arr[i]:
+            return i
+    return -1
+ 
+def search2(arr, key):
+    low = 0
+    high = len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == key:
+            return mid
+        elif arr[mid] < key:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+ 
+# storing accession no
+n = int(input("Enter the number of books to be stored: "))
+book = []
+for i in range(n):
+    print("Enter the accession no of", i + 1, "book")
+    f = int(input())
+    book.append(f)
+ 
+book.sort()  # sort once, after all inputs are collected
+ 
+# linear search
+key = int(input("Enter the accession no of book to be searched: "))
+result_l = search1(book, key)
+if result_l != -1:
+    print("book found at", result_l + 1, "using linear search")
+else:
+    print("book not found")
+ 
+# binary search
+result_b = search2(book, key)
+if result_b != -1:
+    print("book found at", result_b + 1, "using binary search")
+else:
+    print("book not found")
