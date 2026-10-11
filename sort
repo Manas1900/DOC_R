@@ -1,0 +1,42 @@
+def quick_sort(a, low, high):
+    if low < high:
+        pivot = a[low]
+        i = low + 1
+        j = high
+        while i <= j:
+            while i <= high and a[i] <= pivot:
+                i += 1
+            while a[j] > pivot:
+                j -= 1
+            if i < j:
+                a[i], a[j] = a[j], a[i]
+        a[low], a[j] = a[j], a[low]
+        quick_sort(a, low, j - 1)
+        quick_sort(a, j + 1, high)
+def selection_sort(a):
+    n = len(a)
+    for i in range(n):
+        min_pos = i
+        for j in range(i + 1, n):
+            if a[j] < a[min_pos]:
+                min_pos = j
+        a[i], a[min_pos] = a[min_pos], a[i]
+# main program
+n = int(input("Enter number of students:"))
+a = []
+for i in range(n):
+    marks = float(input("Enter percentage:"))
+    a.append(marks)
+b = a.copy()
+selection_sort(b)
+print("\nSelection sort:")
+print(b)
+c = a.copy()
+quick_sort(c, 0, len(c) - 1)
+print("\nQuick sort:")
+print(c)
+# display top five scores
+print("\nTop five scores:")
+count = min(5, n)
+for i in range(n - 1, n - count - 1, -1):
+    print(c[i])
