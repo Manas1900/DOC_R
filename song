@@ -1,0 +1,151 @@
+#include <iostream>
+using namespace std;
+class Node
+{
+public:
+    string song;
+    Node *next, *prev;
+    Node(string s)
+    {
+        song = s;
+        next = prev = NULL;
+    }
+};
+class Playlist
+{
+    Node *head;
+
+public:
+    Playlist()
+    {
+        head = NULL;
+    }
+    
+    void addSong(string s)
+    {
+        Node *newNode = new Node(s);
+
+        if (head == NULL)
+        {
+            head = newNode;
+            head->next = head;
+            head->prev = head;
+        }
+        else
+        {
+            Node *last = head->prev;
+            last->next = newNode;
+            newNode->prev = last;
+            newNode->next = head;
+            head->prev = newNode;
+        }
+        cout << "Song Added: " << s << endl;
+    }
+    void deleteSong(string s)
+    {
+        if (head == NULL)
+        {
+            cout << "Playlist is empty!\n";
+            return;
+        }
+        Node *temp = head;
+        do
+        {
+            if (temp->song == s)
+            {
+                // Only one node
+                if (temp->next == temp)
+                {
+                    head = NULL;
+                }
+                else
+                {
+                    temp->prev->next = temp->next;
+                    temp->next->prev = temp->prev;
+                    if (temp == head)
+                        head = head->next;
+                }
+                delete temp;
+                cout << "Song Deleted: " << s << endl;
+                return;
+            }
+            temp = temp->next;
+        } while (temp != head);
+        cout << "Song not found!\n";
+    }
+    void displayForward()
+    {
+        if (head == NULL)
+        {
+            cout << "Playlist is empty!\n";
+            return;
+        }
+        cout << "\nPlaylist (Forward): ";
+        Node *temp = head;
+        do
+        {
+            cout << temp->song << " -> ";
+            temp = temp->next;
+        } while (temp != head);
+        cout << "(Back to Start)\n";
+    }
+    void displayBackward()
+    {
+        if (head == NULL)
+        {
+            cout << "Playlist is empty!\n";
+            return;
+        }
+        cout << "\nPlaylist (Backward): ";
+        Node *temp = head->prev; // last node
+        do
+        {
+            cout << temp->song << " -> ";
+            temp = temp->prev;
+        } while (temp != head->prev);
+        cout << "(Back to End)\n";
+    }
+};
+int main()
+{
+    Playlist p;
+    int choice;
+    string song;
+    do
+    {
+        cout << "\n===== Smart Music Player =====";
+        cout << "\n1. Add Song";
+        cout << "\n2. Delete Song";
+        cout << "\n3. Display Forward";
+        cout << "\n4. Display Backward";
+        cout << "\n5. Exit";
+        cout << "\nEnter choice: ";
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter Song Name: ";
+            cin >> song;
+            p.addSong(song);
+            break;
+        case 2:
+            cout << "Enter Song Name to Delete: ";
+            cin >> song;
+            p.deleteSong(song);
+            break;
+        case 3:
+            p.displayForward();
+            break;
+        case 4:
+            p.displayBackward();
+            break;
+
+        case 5:
+            cout << "Exiting...\n";
+            break;
+        default:
+            cout << "Invalid Choice!\n";
+        }
+    } while (choice != 5);
+    return 0;
+}
