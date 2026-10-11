@@ -1,0 +1,73 @@
+#include <iostream>
+#include<string>
+Using namespace std;
+Class Node
+{
+Public:
+    Int prn;
+    String name;
+    Node *next;
+    Node(int p, string n)
+    {
+        Prn = p;
+        Name = n;
+        Next = NULL;
+    }
+};
+Class PinnacleClub
+{
+    Node *head;
+Public:
+    PinnacleClub()
+    {
+        Head = NULL;
+    }   
+//add president (First Node)
+Void addpresident(int prn,string name)
+{
+Node *temp = new Node(prn, name);
+        If (head == NULL)
+         {
+            Head = temp;
+        }
+        Else
+        {
+            Temp->next = head;
+            Head = temp;
+        }
+        Cout << “President Added Successfully.\n”;
+    
+} 
+//add secretary(Last Node)
+ Void addSecretary(int prn, string name)
+    {
+        Node *temp = new Node(prn, name);
+        If (head == NULL)
+        {
+            Head = temp;
+            Return;
+        }
+
+        Node *ptr = head;
+        While (ptr->next != NULL)
+            Ptr = ptr->next;
+        Ptr->next = temp;
+        Cout << “Secretary Added Successfully\n”;
+    }
+// add member 
+ Void addMember(int prn, string name)
+    {
+       Node *temp = new Node(prn, name);\
+       If (head==NULL)
+        {
+            Head = temp;
+            Return;
+        }
+        Node *ptr = head;
+        // Insert before Secretary (last node)
+        While (ptr->next->next != NULL)
+            Ptr = ptr->next;
+         Temp->next = ptr->next;
+        Ptr->next = temp;
+        Cout << “Member Added Successfully.\n”;
+    }
