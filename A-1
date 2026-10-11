@@ -1,0 +1,60 @@
+Students=[]
+def insert_Students():
+    roll=int(input("Enter roll no.:"))
+    name=str(input("Enter name :"))
+    marks=int(input("Enter marks :"))
+    Students.append([roll,name,marks])
+    print("Student record inserted successfully.")
+    
+def display_Students():
+    if len(Students)==0:
+        print("No students records found.\n")
+    else:
+        print("\n Student Records")
+        print("_____________")
+        print("Roll No.    | Name  | Marks ")
+    for student in Students:
+        print(student[0],"\t",student[1],"\t",student[2]) 
+     
+def search_Student():
+    roll=int(input("Enter Roll No. of student :"))
+    for student in Students:
+        if student[0]==roll:
+            print("Student found:",student[0])
+            print("Roll no. :",student[1])
+            print("Marks :",student[2])
+            return
+    print("Student record not found .")
+            
+def delete_Students():
+    roll=int(input("Enter Roll no. to delete :"))
+    for student in Students:
+        if student[0]==roll:
+            Students.remove(student)
+            print("Student record deleted successfully. \n")
+            return 
+    print("Student record not found .\n")
+            
+while True:
+    print("Menu")
+    print(“1.Insert student data")
+    print(" 2.Display student data")
+    print(" 3.Delete student data")
+    print("4.Search student data")
+    print("5.Exit")
+    
+    choice=int(input("\nEnter your choice of operation:"))
+
+   if choice==1:
+        insert_Students()
+    elif choice==2:
+        display_Students()
+    elif choice==3:
+        delete_Students()
+    elif choice==4:
+        search_Student()
+    elif choice==5:
+        print("Exiting the Student records")
+        break
+    else:
+        print("Invalid choice !")
